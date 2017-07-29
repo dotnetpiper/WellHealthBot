@@ -88,10 +88,6 @@ namespace HackFest.WellHealthBot.Dialogs
 
                 await context.PostAsync(reply);
             }
-            finally
-            {
-                context.Done<object>(null);
-            }
         }
     }
 }
