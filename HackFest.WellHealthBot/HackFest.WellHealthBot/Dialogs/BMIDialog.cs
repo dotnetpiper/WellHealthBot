@@ -5,6 +5,7 @@ using HackFest.WellHealthBot.Helpers;
 using HackFest.WellHealthBot.Models.BMI;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.FormFlow;
+using Microsoft.Bot.Connector;
 
 namespace HackFest.WellHealthBot.Dialogs
 {
@@ -59,7 +60,10 @@ namespace HackFest.WellHealthBot.Dialogs
                 switch (optionSelected)
                 {
                     case "Health Chart":
-                        context.Done<object>(null);
+                        var message = context.MakeMessage();
+                        var attachment = GetSelectedCard(optionSelected);
+                        message.Attachments.Add(attachment);
+                        await context.PostAsync(message);;
                         break;
                     case "Suggest Doctor":
                         context.Call(new DoctorDialog(), ResumeAfterOptionDialog);
@@ -76,6 +80,19 @@ namespace HackFest.WellHealthBot.Dialogs
 
                 context.Wait(ResumeAfterOptionDialog);
             }
+        }
+        private Attachment GetSelectedCard(string optionSelected)
+        {
+            var healthyHeroCard = new HeroCard
+            {
+                Title = "Health Chart",
+                Subtitle = "Fitness for your mind,body and spirit,Stay Healthy and Fit!!",
+                Text = "n nutrition, diet is the sum of food consumed by a person or other organism.The word diet often implies the use of specific intake of nutrition for health or weight-management reasons. Although humans are omnivores, each culture and each person holds some food preferences or some food taboos. This may be due to personal tastes or ethical reasons. Individual dietary choices may be more or less healthy.Complete nutrition requires ingestion and absorption of vitamins,minerals,and food energy in the form of carbohydrates,proteins,and fats.Dietary habits and choices play a significant role in the quality of life,health and longevity.",
+                Images = new List<CardImage> { new CardImage("http://img.freepik.com/free-vector/farming-harvesting-and-agriculture-badges-or-labels-set-on-white-background-isolated-vector-illustration_1284-2137.jpg?size=338&ext=jpg") },
+                Buttons = new List<CardAction> { new CardAction(ActionTypes.OpenUrl, "NHS Choices", value: "http://www.nhs.uk/pages/home.aspx") }
+            };
+
+            return healthyHeroCard.ToAttachment();
         }
 
         private async Task ResumeAfterOptionDialog(IDialogContext context, IAwaitable<object> result)

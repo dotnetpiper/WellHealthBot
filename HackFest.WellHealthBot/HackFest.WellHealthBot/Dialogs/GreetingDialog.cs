@@ -28,7 +28,7 @@ namespace HackFest.WellHealthBot.Dialogs
                         break;
 
                     case "No":
-                        await context.PostAsync("Thanks for using Well Health Bot.");
+                        await context.PostAsync("Thanks for using WellHealth Bot.");
                         context.Done<object>(null);
                         break;
                 }
@@ -60,6 +60,7 @@ namespace HackFest.WellHealthBot.Dialogs
                 attachmentMsg.AttachmentLayout = AttachmentLayoutTypes.List;
                 await context.PostAsync(attachmentMsg);
                 await context.PostAsync("May i know your name?");
+
             }
             else
             {
