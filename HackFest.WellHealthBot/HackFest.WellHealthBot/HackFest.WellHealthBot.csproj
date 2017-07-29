@@ -115,6 +115,7 @@
     <Compile Include="Dialogs\LuisAIDialog.cs" />
     <Compile Include="Dialogs\BMIDialog.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
+    <Compile Include="Dialogs\DoctorDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -123,7 +124,13 @@
     <Compile Include="Models\BMI\BMIResponse.cs" />
     <Compile Include="Models\BMI\GenderEnum.cs" />
     <Compile Include="Models\BMI\UnitEnum.cs" />
+
+    <Compile Include="Models\Doctor\Doctor.cs" />
+    <Compile Include="Models\Doctor\SearchDoctorQuery.cs" />
+    <Compile Include="Models\Doctor\Specialist.cs" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DoctorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -138,8 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

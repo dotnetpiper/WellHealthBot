@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HackFest.WellHealthBot.Helpers;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Builder.Luis;
@@ -25,19 +26,29 @@ namespace HackFest.WellHealthBot.Dialogs
 
         private IForm<BMI> BuildBmiForm()
         {
-            OnCompletionAsyncDelegate<BMI> processHotelsSearch = async (context, state) =>
+            OnCompletionAsyncDelegate<BMI> processBmiSearch = async (context, state) =>
             {
             };
 
             return new FormBuilder<BMI>()
             .AddRemainingFields()
-            .OnCompletion(processHotelsSearch)
+            .OnCompletion(processBmiSearch)
             .Build();
         }
 
-        private async Task Callback(IDialogContext context, IAwaitable<object> result)
+        private async Task Callback(IDialogContext context, IAwaitable<BMI> result)
         {
-            //context.Wait(MessageReceived);
+            try
+            {
+                var actualResult = await result;
+                var obj = BMICalculator.CalulateBMI(actualResult.weight, actualResult.height, actualResult.age, actualResult.gender);
+                // Tell the user that the form is complete
+                await context.PostAsync(text: "Your BMI is " + obj.BMI.ToString("00.00") + " and you are " + obj.HealthStatus);
+            }
+            finally
+            {
+                context.Done<object>(null);
+            }
         }
     }
 }
