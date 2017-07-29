@@ -28,14 +28,14 @@ namespace HackFest.WellHealthBot.Dialogs
                 switch (optionSelected)
                 {
                     case "Yes":
-                        context.Call(new Dialogs.BMIDialog(), ResumeAfterOptionDialog);
+                        context.Call(new Dialogs.BMIDialog(), ResumeAfterOptionDialog1Async);
                         break;
 
                     case "No":
                         await context.PostAsync(
                             "Tell me how you’re feeling or your symptoms, and I will try to find relevant medical information to help you understand why you’re feeling this way.");
                         await context.PostAsync("I can also instantly search for a doctor to you.");
-                        context.Wait(this.ResumeAfterOptionDialog);
+                        context.Done<object>(null);
                         break;
                 }
             }
@@ -45,6 +45,12 @@ namespace HackFest.WellHealthBot.Dialogs
 
                 context.Wait(this.ResumeAfterOptionDialog);
             }
+        }
+
+        private async Task ResumeAfterOptionDialog1Async(IDialogContext context, IAwaitable<object> result)
+        {
+            var a = await result;
+            context.Done<object>(null);
         }
 
         private async Task Respond(IDialogContext context)

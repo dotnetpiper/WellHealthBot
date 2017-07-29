@@ -40,14 +40,19 @@ namespace HackFest.WellHealthBot.Dialogs
                 // Tell the user that the form is complete
                 await context.PostAsync("Your BMI is " + obj.BMI.ToString("00.00") + " and you are " + obj.HealthStatus);
                 context.PrivateConversationData.SetValue<string>("HealthStatus", obj.HealthStatus);
-                PromptDialog.Choice(context, OnOptionSelected,
-                    new List<string> {"Health Chart", "Suggest Doctor", "Physical Activity"},
-                    "To maintain your weight, make sure your eat a healthy,balanced diet, and that you exercise regualarly.");
+                CallChoices(context);
             }
             catch (Exception ex)
             {
                 await context.PostAsync($"Failed with message: {ex.Message}");
             }
+        }
+
+        private void CallChoices(IDialogContext context)
+        {
+            PromptDialog.Choice(context, OnOptionSelected,
+                new List<string> {"Health Chart", "Suggest Doctor", "Physical Activity"},
+                "To maintain your weight, make sure your eat a healthy,balanced diet, and that you exercise regualarly.");
         }
 
 
@@ -65,7 +70,7 @@ namespace HackFest.WellHealthBot.Dialogs
                         attachment = GetHealthyChart(optionSelected, healthStatus);
                         message.Attachments.Add(attachment);
                         await context.PostAsync(message);
-                        //context.Wait(ResumeAfterOptionDialog);
+                        CallChoices(context);
                         break;
                     case "Suggest Doctor":
                         context.Call(new DoctorDialog(), ResumeAfterOptionDialog);
@@ -74,7 +79,7 @@ namespace HackFest.WellHealthBot.Dialogs
                          attachment = GetPhysicalActivity(optionSelected, healthStatus);
                         message.Attachments.Add(attachment);
                         await context.PostAsync(message);
-                        //context.Done<object>(null);
+                        CallChoices(context);
                         break;
                 }
             }
