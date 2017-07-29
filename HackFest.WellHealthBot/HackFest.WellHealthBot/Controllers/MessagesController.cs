@@ -2,31 +2,25 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using HackFest.WellHealthBot.Dialogs;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
-using HackFest.WellHealthBot.Dialogs;
 
-namespace HackFest.WellHealthBot
+namespace HackFest.WellHealthBot.Controllers
 {
     [BotAuthentication]
     public class MessagesController : ApiController
     {
         /// <summary>
-        /// POST: api/Messages
-        /// Receive a message from a user and reply to it
+        ///     POST: api/Messages
+        ///     Receive a message from a user and reply to it
         /// </summary>
-        public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
+        public async Task<HttpResponseMessage> Post([FromBody] Activity activity)
         {
             if (activity.Type == ActivityTypes.Message)
-            {
                 await Conversation.SendAsync(activity, () => new LuisAIDialog());
-
-                //await Conversation.SendAsync(activity, () => new Dialogs.BMIDialog(BMI.BuildForm));
-            }
             else
-            {
                 HandleSystemMessage(activity);
-            }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector;
 
 namespace HackFest.WellHealthBot.Dialogs
 {
@@ -10,7 +9,7 @@ namespace HackFest.WellHealthBot.Dialogs
     {
         public Task StartAsync(IDialogContext context)
         {
-            context.Call(new DoctorDialog(), this.ResumeAfterOptionDialog);
+            context.Call(new DoctorDialog(), ResumeAfterOptionDialog);
 
             return Task.CompletedTask;
         }
@@ -27,7 +26,7 @@ namespace HackFest.WellHealthBot.Dialogs
             }
             finally
             {
-                context.Wait(this.ResumeAfterOptionDialog);
+                context.Wait(ResumeAfterOptionDialog);
             }
         }
     }

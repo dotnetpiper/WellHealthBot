@@ -16,17 +16,19 @@ namespace HackFest.WellHealthBot.Dialogs
     {
         public async Task StartAsync(IDialogContext context)
         {
-            var searchFormDialog = FormDialog.FromForm(this.BuildSearchForm, FormOptions.PromptInStart);
+            var searchFormDialog = FormDialog.FromForm(BuildSearchForm, FormOptions.PromptInStart);
 
-            context.Call(searchFormDialog, this.ResumeAfterDoctorFormDialog);
+            context.Call(searchFormDialog, ResumeAfterDoctorFormDialog);
         }
 
         private IForm<SearchDoctorQuery> BuildSearchForm()
         {
-            OnCompletionAsyncDelegate<SearchDoctorQuery> processSearch = async (context, state) =>
-            {
-                await context.PostAsync($"Ok. Searching for Doctor in {state.Location} Specialist in {state.Specialist}....");
-            };
+            OnCompletionAsyncDelegate<SearchDoctorQuery> processSearch =
+                async (context, state) =>
+                {
+                    await context.PostAsync(
+                        $"Ok. Searching for Doctor in {state.Location} Specialist in {state.Specialist}....");
+                };
 
             return new FormBuilder<SearchDoctorQuery>()
                 .Message("Welcome to the Doctor finder!")
@@ -50,21 +52,22 @@ namespace HackFest.WellHealthBot.Dialogs
 
                 foreach (var doc in doctors)
                 {
-                    ThumbnailCard heroCard = new ThumbnailCard()
+                    var heroCard = new ThumbnailCard
                     {
                         Title = doc.Name,
                         Subtitle = $"{doc.Rating} stars. {doc.NumberOfReviews} reviews.",
-                        Images = new List<CardImage>()
+                        Images = new List<CardImage>
                         {
-                            new CardImage() { Url = doc.Image }
+                            new CardImage {Url = doc.Image}
                         },
-                        Buttons = new List<CardAction>()
+                        Buttons = new List<CardAction>
                         {
-                            new CardAction()
+                            new CardAction
                             {
                                 Title = "More details",
                                 Type = ActionTypes.OpenUrl,
-                                Value = $"https://www.google.com/search?q=doctors+in+" + HttpUtility.UrlEncode(doc.Location)
+                                Value =
+                                    $"https://www.google.com/search?q=doctors+in+" + HttpUtility.UrlEncode(doc.Location)
                             }
                         }
                     };
@@ -79,13 +82,9 @@ namespace HackFest.WellHealthBot.Dialogs
                 string reply;
 
                 if (ex.InnerException == null)
-                {
                     reply = "You have canceled the operation. Quitting from the Search Dialog";
-                }
                 else
-                {
                     reply = $"Oops! Something went wrong :( Technical Details: {ex.InnerException.Message}";
-                }
 
                 await context.PostAsync(reply);
             }

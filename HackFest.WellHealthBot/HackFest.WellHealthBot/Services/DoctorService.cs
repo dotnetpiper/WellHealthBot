@@ -11,7 +11,7 @@ namespace HackFest.WellHealthBot.Services
         public static async Task<IEnumerable<Doctor>> FindDoctorsAsync(SearchDoctorQuery searchQuery)
         {
             var doctors = new List<Doctor>();
-           
+
             // Filling the hotels results manually just for demo purposes
             for (var i = 1; i <= 4; i++)
             {
@@ -23,13 +23,14 @@ namespace HackFest.WellHealthBot.Services
                     Location = searchQuery.Location,
                     Rating = docEntity.Rating,
                     NumberOfReviews = random.Next(0, 5000),
-                    Image = docEntity.Image //$"https://placeholdit.imgix.net/~text?txtsize=35&txt=Doctor+{i}&w=500&h=260"
+                    Image = docEntity.Image
+                    //$"https://placeholdit.imgix.net/~text?txtsize=35&txt=Doctor+{i}&w=500&h=260"
                 };
 
                 doctors.Add(doc);
             }
 
-            doctors = doctors.OrderByDescending(c=>c.Rating).ToList();
+            doctors = doctors.OrderByDescending(c => c.Rating).ToList();
 
             return doctors;
         }
@@ -38,39 +39,40 @@ namespace HackFest.WellHealthBot.Services
         {
             var lstDoctors = new List<Doctor>
             {
-                new Doctor()
+                new Doctor
                 {
                     Name = "Dr. Nitin Jha",
                     Image = "https://images1-fabric.practo.com/dr-nitin-jha-1452774116-569792e44aa8b.jpg/thumbnail",
                     Rating = 5
                 },
-                new Doctor()
+                new Doctor
                 {
                     Name = "Dr. Gaurav Rathore",
                     Image = "https://images1-fabric.practo.com/dr-gaurav-rathore-1469084246-57907257001a9.jpg/thumbnail",
                     Rating = 4
                 },
-                new Doctor()
+                new Doctor
                 {
                     Name = "Dr. Manu Tiwari ",
-                    Image = "https://images1-fabric.practo.com/554a117e9403d8277e0910d750195b448797616e091ad.jpg/thumbnail",
+                    Image =
+                        "https://images1-fabric.practo.com/554a117e9403d8277e0910d750195b448797616e091ad.jpg/thumbnail",
                     Rating = 1
                 },
-                new Doctor()
+                new Doctor
                 {
                     Name = "Dr. Ali Nawaz",
                     Image = "https://images1-fabric.practo.com/dr-ali-nawaz-1469440404-5795e1940b74e.jpg/thumbnail",
                     Rating = 3
                 },
-                new Doctor()
+                new Doctor
                 {
                     Name = "Dr. Aradhana Singh",
-                    Image = "https://images1-fabric.practo.com/doctor/449066/dr-aradhana-singh-58e381e4d3abf.jpg/thumbnail",
+                    Image =
+                        "https://images1-fabric.practo.com/doctor/449066/dr-aradhana-singh-58e381e4d3abf.jpg/thumbnail",
                     Rating = 2
                 }
             };
             return lstDoctors;
         }
-
     }
 }

@@ -1,12 +1,8 @@
-﻿using Microsoft.Bot.Builder.Dialogs;
-using System;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Bot.Builder.FormFlow;
-using Microsoft.Bot.Builder.Internals.Fibers;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
-
 
 namespace HackFest.WellHealthBot.Dialogs
 {
@@ -14,10 +10,6 @@ namespace HackFest.WellHealthBot.Dialogs
     [Serializable]
     public class LuisAIDialog : LuisDialog<object>
     {
-        public LuisAIDialog()
-        {
-            
-        }
         [LuisIntent("None")]
         public async Task None(IDialogContext context, LuisResult result)
         {
@@ -29,13 +21,12 @@ namespace HackFest.WellHealthBot.Dialogs
         private async Task Welcome(IDialogContext context, LuisResult result)
         {
             context.Call(new GreetingDialog(), Callback);
-
         }
 
         private async Task Callback(IDialogContext context, IAwaitable<object> result)
         {
             context.Wait(MessageReceived);
-            
+
             //await Conversation.SendAsync(activity, () => new Dialogs.BMIDialog(BMI.BuildForm));
         }
     }
