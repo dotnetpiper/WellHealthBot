@@ -1,24 +1,31 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using HackFest.WellHealthBot.Dialogs;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 
 namespace HackFest.WellHealthBot
 {
-    [BotAuthentication]
+    [Microsoft.Bot.Connector.BotAuthentication]
     public class MessagesController : ApiController
     {
+        public class BotAuthenticationAttribute : Attribute
+        {
+        }
+
         /// <summary>
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
         /// </summary>
-        public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
+        public async Task<HttpResponseMessage> Post([FromBody]Microsoft.Bot.Connector.Activity activity)
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+                await Conversation.SendAsync(activity, () => new LuisAIDialog());
+                //await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
             }
             else
             {
