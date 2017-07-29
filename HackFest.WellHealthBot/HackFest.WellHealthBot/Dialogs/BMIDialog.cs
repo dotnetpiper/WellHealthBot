@@ -34,10 +34,9 @@ namespace HackFest.WellHealthBot.Dialogs
         private async Task Callback(IDialogContext context, IAwaitable<BMI> result)
         {
             try
-            {
+            {                
                 var actualResult = await result;
-                var obj = BMICalculator.CalulateBMI(actualResult.weight, actualResult.height, actualResult.age,
-                    actualResult.gender);
+                var obj = BMICalculator.CalulateBMI(actualResult);                    
                 // Tell the user that the form is complete
                 await context.PostAsync("Your BMI is " + obj.BMI.ToString("00.00") + " and you are " + obj.HealthStatus);
                 PromptDialog.Choice(context, OnOptionSelected,
