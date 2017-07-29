@@ -13,14 +13,15 @@ namespace HackFest.WellHealthBot.Dialogs
         [LuisIntent("None")]
         public async Task None(IDialogContext context, LuisResult result)
         {
-            await context.PostAsync("Sorry,I dont know much what you said.");
+            await context.PostAsync("Sorry, I dont know much what you said.");
             context.Wait(MessageReceived);
         }
 
         [LuisIntent("Greet.Welcome")]
-        private async Task Welcome(IDialogContext context, LuisResult result)
+        private Task Welcome(IDialogContext context, LuisResult result)
         {
             context.Call(new GreetingDialog(), Callback);
+            return Task.CompletedTask;
         }
 
         private async Task Callback(IDialogContext context, IAwaitable<object> result)
@@ -28,6 +29,35 @@ namespace HackFest.WellHealthBot.Dialogs
             context.Wait(MessageReceived);
 
             //await Conversation.SendAsync(activity, () => new Dialogs.BMIDialog(BMI.BuildForm));
+        }
+
+        [LuisIntent("Greet.Farewell")]
+        public async Task GreetFarewell(IDialogContext context, LuisResult luisResult)
+        {
+            string response = string.Empty;
+            var userName = context.UserData.Get<string>("Name");
+            if (DateTime.Now.ToString("tt") == "AM")
+            {
+                response = $"Good bye {userName}.. Have a nice day. :)\r\rThank you for using WellHealth Bot!";
+            }
+            else
+            {
+                response = $"b'bye {userName}, Take care.\r\rThank you for using WellHealth Bot!";
+            }
+            await context.PostAsync(response);
+            context.Wait(this.MessageReceived);
+        }
+
+        [LuisIntent("Search.Doctor")]
+        public async Task SearchDoctor(IDialogContext context, LuisResult luisResult)
+        {
+            EntityRecommendation specialization;
+            string name = string.Empty;
+            if (luisResult.TryFindEntity("Medical.Specialist", out specialization))
+            {
+                name = specialization.Entity;
+            }
+            context.Call(new DoctorDialog(), this.Callback);
         }
     }
 }

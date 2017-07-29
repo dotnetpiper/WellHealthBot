@@ -8,11 +8,11 @@ namespace HackFest.WellHealthBot.Models.BMI
     {
         [Prompt ("Please choose your preferred Weight Unit {||}")]
         public WeightUnit weightUnit;
-        [Prompt("Please enter your Weight")]
+        [Prompt("Please enter your Weight in {weightUnit}")]
         public double weight;
         [Prompt("Please choose your preferred Height Unit {||}")]
         public HeightUnit heightUnit;
-        [Prompt("Please enter your Height")]
+        [Prompt("Please enter your Height in {heightUnit}")]
         public string height;
         [Prompt("Please select your Gender {||}")]
         public Gender gender;
