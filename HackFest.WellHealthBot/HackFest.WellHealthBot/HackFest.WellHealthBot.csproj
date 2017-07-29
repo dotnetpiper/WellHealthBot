@@ -113,10 +113,16 @@
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\GreetingDialog.cs" />
     <Compile Include="Dialogs\LuisAIDialog.cs" />
+    <Compile Include="Dialogs\BMIDialog.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BMICalculator.cs" />
+    <Compile Include="Models\BMI\BMI.cs" />
+    <Compile Include="Models\BMI\BMIResponse.cs" />
+    <Compile Include="Models\BMI\GenderEnum.cs" />
+    <Compile Include="Models\BMI\UnitEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

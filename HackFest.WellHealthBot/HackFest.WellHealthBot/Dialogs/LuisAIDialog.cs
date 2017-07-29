@@ -29,11 +29,14 @@ namespace HackFest.WellHealthBot.Dialogs
         private async Task Welcome(IDialogContext context, LuisResult result)
         {
             context.Call(new GreetingDialog(), Callback);
+
         }
 
         private async Task Callback(IDialogContext context, IAwaitable<object> result)
         {
             context.Wait(MessageReceived);
+            
+            //await Conversation.SendAsync(activity, () => new Dialogs.BMIDialog(BMI.BuildForm));
         }
     }
 }
