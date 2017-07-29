@@ -32,8 +32,10 @@ namespace HackFest.WellHealthBot.Dialogs
                         break;
 
                     case "No":
-                        await context.PostAsync("Thanks for using Well Health Bot.");
-                        context.Done<object>(null);
+                        await context.PostAsync(
+                            "Tell me how you’re feeling or your symptoms, and I will try to find relevant medical information to help you understand why you’re feeling this way.");
+                        await context.PostAsync("I can also instantly search for a doctor to you.");
+                        context.Wait(this.ResumeAfterOptionDialog);
                         break;
                 }
             }
@@ -63,9 +65,8 @@ namespace HackFest.WellHealthBot.Dialogs
             }
             else
             {
-                await context.PostAsync(
-    $"Hi {userName}.  Would you like to check your BMI?{Environment.NewLine}Body mass index (BMI) is a measure of body fat based on height and weight that applies to adult men and women");
-                PromptDialog.Choice(context, OnOptionSelected, new List<string> { "Yes", "No" }, " ");
+                await context.PostAsync($" Welcome {userName}.  Would you like to check your BMI?");
+                PromptDialog.Choice(context, OnOptionSelected, new List<string> { "Yes", "No" }, "Body mass index (BMI) is a measure of body fat based on height and weight that applies to adult men and women");
             }
         }
 
