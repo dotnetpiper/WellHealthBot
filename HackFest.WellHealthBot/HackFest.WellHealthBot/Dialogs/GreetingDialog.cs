@@ -24,24 +24,24 @@ namespace HackFest.WellHealthBot.Dialogs
             {
                 string optionSelected = await result;
 
-                switch (optionSelected)
+                switch (optionSelected.ToUpper())
                 {
-                    case "BMI Calculator":                    
+                    case "BMI CALCULATOR":                    
                         context.Call(new Dialogs.BMIDialog(), ResumeAfterOptionDialog1Async);
                         break;
-                    case "Suggest Doctor":
+                    case "SUGGEST DOCTOR":
                         context.Call(new Dialogs.DoctorDialog(), ResumeAfterOptionDialog1Async);
                         break;
-                    case "Symptoms":
+                    case "SYMPTOMS":
                         await context.PostAsync("First, let me know your symptoms or the condition you want to learn more about. Shorter descriptions are usually a good start. For example: <i>I have a sore throat.</i>");
                         context.Done<object>(null);
                         break;
-                    case "Help":
+                    case "HELP":
                         await context.PostAsync(
                             "Please leave a message and we will respond as soon as possible. Or, say <i>Hi</i> again to return to the main menu.");
                             context.Done<object>(null);
                         break;
-                    case "No":
+                    case "NO":
                         await context.PostAsync(
                             "Tell me how you’re feeling or your symptoms, and I will try to find relevant medical information to help you understand why you’re feeling this way.");
                         await context.PostAsync("I can also instantly search for a doctor to you,Kindly type<b>doctor</b>");
