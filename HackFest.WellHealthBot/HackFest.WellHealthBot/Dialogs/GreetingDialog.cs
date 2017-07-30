@@ -14,7 +14,7 @@ namespace HackFest.WellHealthBot.Dialogs
     {
         public async Task StartAsync(IDialogContext context)
         {
-            await context.PostAsync("Hi I'm Well-Health Bot System..");
+            //await context.PostAsync("..");
             await Respond(context);            
         }
 
@@ -59,7 +59,7 @@ namespace HackFest.WellHealthBot.Dialogs
             {
                 context.UserData.SetValue<bool>("GetName", true);
                 var attachmentMsg = context.MakeMessage();
-                attachmentMsg.Text = "WellHealthBot";
+                attachmentMsg.Text = "Hi, I'm Well-Health Bot!";
                 attachmentMsg.Attachments.Add(new Attachment() { ContentUrl = "https://logo.clearbit.com/https:/www.wellhealthqc.com/", ContentType = "image/png", Name = "wellhealth.jpeg" });
                 //attachmentMsg.Attachments.Add(new Attachment() { ContentUrl = "https://logo.clearbit.com/https:/www.healthwellfoundation.org/", ContentType = "image/png", Name = "wellhealth.jpeg" });
                 attachmentMsg.AttachmentLayout = AttachmentLayoutTypes.List;
