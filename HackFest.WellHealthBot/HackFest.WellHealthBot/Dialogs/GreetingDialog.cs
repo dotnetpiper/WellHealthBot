@@ -58,12 +58,6 @@ namespace HackFest.WellHealthBot.Dialogs
             if (string.IsNullOrEmpty(userName))
             {
                 context.UserData.SetValue<bool>("GetName", true);
-                var attachmentMsg = context.MakeMessage();
-                attachmentMsg.Text = "Hi, I'm Well-Health Bot!";
-                attachmentMsg.Attachments.Add(new Attachment() { ContentUrl = "https://logo.clearbit.com/https:/www.wellhealthqc.com/", ContentType = "image/png", Name = "wellhealth.jpeg" });
-                //attachmentMsg.Attachments.Add(new Attachment() { ContentUrl = "https://logo.clearbit.com/https:/www.healthwellfoundation.org/", ContentType = "image/png", Name = "wellhealth.jpeg" });
-                attachmentMsg.AttachmentLayout = AttachmentLayoutTypes.List;
-                await context.PostAsync(attachmentMsg);
                 PromptDialog.Text(context,this.MessageReceivedAsync, "May I know your name?");
             }
             else

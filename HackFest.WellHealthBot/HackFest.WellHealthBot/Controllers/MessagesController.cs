@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -31,12 +33,41 @@ namespace HackFest.WellHealthBot.Controllers
             {
                 // Implement user deletion here
                 // If we handle user deletion, return a real message
+
+                message.GetStateClient().BotState.DeleteStateForUser(message.ChannelId, message.From.Id);
+
             }
             else if (message.Type == ActivityTypes.ConversationUpdate)
             {
                 // Handle conversation state changes, like members being added and removed
                 // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                 // Not available in all channels
+
+
+                IConversationUpdateActivity update = message;
+
+                if (update.MembersAdded != null && update.MembersAdded.Any())
+                {
+                    foreach (var newMember in update.MembersAdded)
+                    {
+                        if (newMember.Id != message.Recipient.Id)
+                        {
+                            ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
+
+                            Activity reply = message.CreateReply();
+                            reply.Text = "Hi, I'm Well-Health Bot!";
+                            reply.Attachments.Add(new Attachment()
+                            {
+                                ContentUrl = "https://logo.clearbit.com/https:/www.wellhealthqc.com/",
+                                ContentType = "image/png",
+                                Name = "wellhealth.jpeg"
+                            });
+                            //attachmentMsg.Attachments.Add(new Attachment() { ContentUrl = "https://logo.clearbit.com/https:/www.healthwellfoundation.org/", ContentType = "image/png", Name = "wellhealth.jpeg" });
+                            reply.AttachmentLayout = AttachmentLayoutTypes.List;
+                            connector.Conversations.ReplyToActivity(reply);
+                        }
+                    }
+                }
             }
             else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
@@ -45,13 +76,16 @@ namespace HackFest.WellHealthBot.Controllers
             }
             else if (message.Type == ActivityTypes.Typing)
             {
+                return message.CreateReply("...");
                 // Handle knowing tha the user is typing
             }
             else if (message.Type == ActivityTypes.Ping)
             {
+                return message.CreateReply("ping");
             }
 
             return null;
         }
+
     }
 }
