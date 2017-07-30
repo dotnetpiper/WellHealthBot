@@ -14,9 +14,8 @@ namespace HackFest.WellHealthBot.Dialogs
     {
         public async Task StartAsync(IDialogContext context)
         {
-            await context.PostAsync("Hi I'm 3Pillar Bot System..");
-            await Respond(context);
-            
+            await context.PostAsync("Hi I'm Well-Health Bot System..");
+            await Respond(context);            
         }
 
         private async Task OnOptionSelected(IDialogContext context, IAwaitable<string> result)
@@ -27,10 +26,9 @@ namespace HackFest.WellHealthBot.Dialogs
 
                 switch (optionSelected)
                 {
-                    case "Yes":
+                    case "Yes":                    
                         context.Call(new Dialogs.BMIDialog(), ResumeAfterOptionDialog1Async);
                         break;
-
                     case "No":
                         await context.PostAsync(
                             "Tell me how you’re feeling or your symptoms, and I will try to find relevant medical information to help you understand why you’re feeling this way.");
@@ -59,20 +57,19 @@ namespace HackFest.WellHealthBot.Dialogs
             context.UserData.TryGetValue<string>("Name", out userName);
             if (string.IsNullOrEmpty(userName))
             {
-
                 context.UserData.SetValue<bool>("GetName", true);
                 var attachmentMsg = context.MakeMessage();
-                attachmentMsg.Text = "3PillatBot";
-                attachmentMsg.Attachments.Add(new Attachment() { ContentUrl = "https://logo.clearbit.com/www.3pillarglobal.com", ContentType = "image/png", Name = "3Pillar.jpeg" });
+                attachmentMsg.Text = "WellHealthBot";
+                attachmentMsg.Attachments.Add(new Attachment() { ContentUrl = "https://logo.clearbit.com/https:/www.wellhealthqc.com/", ContentType = "image/png", Name = "wellhealth.jpeg" });
+                //attachmentMsg.Attachments.Add(new Attachment() { ContentUrl = "https://logo.clearbit.com/https:/www.healthwellfoundation.org/", ContentType = "image/png", Name = "wellhealth.jpeg" });
                 attachmentMsg.AttachmentLayout = AttachmentLayoutTypes.List;
                 await context.PostAsync(attachmentMsg);
-                PromptDialog.Text(context,this.MessageReceivedAsync, "May i know your name?");
-
+                PromptDialog.Text(context,this.MessageReceivedAsync, "May I know your name?");
             }
             else
             {
                 await context.PostAsync($" Welcome {userName}.  Would you like to check your BMI?");
-                PromptDialog.Choice(context, OnOptionSelected, new List<string> { "Yes", "No" }, "Body mass index (BMI) is a measure of body fat based on height and weight that applies to adult men and women");
+                PromptDialog.Choice(context, OnOptionSelected, new List<string> { "Yes", "No" }, "Body mass index (BMI) is a measure of body fat based on height and weight that applies to adult men and women.");
             }
         }
 
