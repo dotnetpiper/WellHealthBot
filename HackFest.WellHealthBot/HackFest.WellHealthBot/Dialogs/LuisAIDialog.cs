@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
+using Microsoft.Bot.Connector;
 
 namespace HackFest.WellHealthBot.Dialogs
 {
@@ -58,6 +60,62 @@ namespace HackFest.WellHealthBot.Dialogs
                 name = specialization.Entity;
             }
             context.Call(new DoctorDialog(), this.Callback);
+        }
+
+        [LuisIntent("Check.Symptom")]
+        public async Task CheckSymptom(IDialogContext context, LuisResult luisResult)
+        {
+            EntityRecommendation symptom;
+            string disease = string.Empty;
+            if(luisResult.TryFindEntity("General.Diseases", out symptom))
+            {
+                disease = symptom.Entity;
+            }
+            var message = context.MakeMessage();
+            Attachment attachment = GetRemeady(disease.ToLower());
+            message.Attachments.Add(attachment);
+            await context.PostAsync(message);
+        }
+
+        private Attachment GetRemeady(string disease)
+        {
+            ThumbnailCard remeadyHeroCard;
+
+            if (disease.Contains("throat"))
+            {
+                remeadyHeroCard = new ThumbnailCard
+                {
+                    Title = "Remeady for " + disease,
+                    Subtitle = "12 Natural Remedies for Sore Throat",
+                    Text = "A sore throat is pain, scratchiness or irritation of the throat that often worsens when you swallow.",
+                    Images = new List<CardImage> { new CardImage("http://www.clevelandsurgery.nhs.uk/sites/default/files/sorethroat.jpg") },
+                    Buttons = new List<CardAction> { new CardAction(ActionTypes.OpenUrl, "Check Remeady", value: "http://www.healthline.com/health/cold-flu/sore-throat-natural-remedies?algo=f#overview1") }
+                };
+            }
+            else if (disease.Contains("fever"))
+            {
+                remeadyHeroCard = new ThumbnailCard
+                {
+                    Title = "Remeady for " + disease,
+                    Subtitle = "Home Remedies for Fever",
+                    Text = "Whenever the body’s temperature is higher than the normal range, it is called a fever. Although we commonly hear that 98.6 degrees F, or 37 degrees C, is considered normal, this is not a set number that applies universally to all. Normal body temperature is different for children than adults and also can vary among individuals.",
+                    Images = new List<CardImage> { new CardImage("http://img2.timeinc.net/health/images/slides/high-fever-bed-400x400.jpg") },
+                    Buttons = new List<CardAction> { new CardAction(ActionTypes.OpenUrl, "Check Remeady", value: "http://www.top10homeremedies.com/home-remedies/home-remedies-fever.html") }
+                };
+            }
+            else
+            {
+                remeadyHeroCard = new ThumbnailCard
+                {
+                    Title = "symptom-checker",
+                    Subtitle = "Experiencing symptoms but not sure what they mean?",
+                    Text = "Use our Symptom Checker to help determine possible causes and treatments, and when to see a doctor.",
+                    Images = new List<CardImage> { new CardImage("https://refluxmd.files.wordpress.com/2013/04/home-remedies.jpg") },
+                    Buttons = new List<CardAction> { new CardAction(ActionTypes.OpenUrl, "Check Remeady", value: "http://www.healthline.com/symptom-checker") }
+                };
+            }
+
+            return remeadyHeroCard.ToAttachment();
         }
     }
 }
