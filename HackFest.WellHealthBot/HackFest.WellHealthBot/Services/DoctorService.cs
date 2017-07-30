@@ -19,6 +19,7 @@ namespace HackFest.WellHealthBot.Services
                 var docEntity = DummyDoctors()[i];
                 var doc = new Doctor
                 {
+                    Key= docEntity.Key,
                     Name = docEntity.Name,
                     Location = searchQuery.Location,
                     Rating = docEntity.Rating,
@@ -43,33 +44,38 @@ namespace HackFest.WellHealthBot.Services
                 {
                     Name = "Dr. Nitin Jha",
                     Image = "https://images1-fabric.practo.com/dr-nitin-jha-1452774116-569792e44aa8b.jpg/thumbnail",
-                    Rating = 5
+                    Rating = 5,
+                    Key = "1"
                 },
                 new Doctor
                 {
                     Name = "Dr. Gaurav Rathore",
                     Image = "https://images1-fabric.practo.com/dr-gaurav-rathore-1469084246-57907257001a9.jpg/thumbnail",
-                    Rating = 4
+                    Rating = 4,
+                    Key = "2"
                 },
                 new Doctor
                 {
                     Name = "Dr. Manu Tiwari ",
                     Image =
                         "https://images1-fabric.practo.com/554a117e9403d8277e0910d750195b448797616e091ad.jpg/thumbnail",
-                    Rating = 1
+                    Rating = 1,
+                    Key = "3"
                 },
                 new Doctor
                 {
                     Name = "Dr. Ali Nawaz",
                     Image = "https://images1-fabric.practo.com/dr-ali-nawaz-1469440404-5795e1940b74e.jpg/thumbnail",
-                    Rating = 3
+                    Rating = 3,
+                    Key = "4"
                 },
                 new Doctor
                 {
                     Name = "Dr. Aradhana Singh",
                     Image =
                         "https://images1-fabric.practo.com/doctor/449066/dr-aradhana-singh-58e381e4d3abf.jpg/thumbnail",
-                    Rating = 2
+                    Rating = 2,
+                    Key = "5"
                 }
             };
             return lstDoctors;

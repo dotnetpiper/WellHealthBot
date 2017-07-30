@@ -180,6 +180,7 @@ namespace HackFest.WellHealthBot.Dialogs
             try
             {
                 var message = await result;
+                CallChoices(context);
             }
             catch (Exception ex)
             {

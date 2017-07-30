@@ -27,7 +27,7 @@ namespace HackFest.WellHealthBot.Dialogs
                 async (context, state) =>
                 {
                     await context.PostAsync(
-                        $"Ok. Searching for Doctor in {state.Location} Specialist in {state.Specialist}....");
+                        $"Ok. Searching for Doctor in {state.Location}, Specialist in {state.Specialist}....");
                 };
 
             return new FormBuilder<SearchDoctorQuery>()
@@ -68,14 +68,17 @@ namespace HackFest.WellHealthBot.Dialogs
                                 Type = ActionTypes.OpenUrl,
                                 Value =
                                     $"https://www.google.com/search?q=doctors+in+" + HttpUtility.UrlEncode(doc.Location)
-                            }
+                            },
+                            new CardAction(ActionTypes.ImBack, "Book", value: doc.Name)
                         }
+
                     };
 
                     resultMessage.Attachments.Add(heroCard.ToAttachment());
                 }
 
                 await context.PostAsync(resultMessage);
+                context.Wait(this.ActOnSearchResults);
             }
             catch (FormCanceledException ex)
             {
@@ -87,6 +90,33 @@ namespace HackFest.WellHealthBot.Dialogs
                     reply = $"Oops! Something went wrong :( Technical Details: {ex.InnerException.Message}";
 
                 await context.PostAsync(reply);
+            }
+            //finally
+            //{
+            //    await context.PostAsync("Thank you for choosing Doctor Finder..!!!");
+            //    context.Done<object>(null);
+            //}
+        }
+
+        private async Task ActOnSearchResults(IDialogContext context, IAwaitable<IMessageActivity> input)
+        {
+
+            var activity = await input;
+            var choice = activity.Text;
+            PromptDialog.Confirm(context, this.BookAppointment, $"Do you want me to schedule your Appointment with {choice}");
+
+        }
+
+        private async Task BookAppointment(IDialogContext context, IAwaitable<bool> result)
+        {
+            try
+            {
+                await context.PostAsync("Your Appointment is booked for tomorrow.");
+            }
+            finally
+            {
+                await context.PostAsync("Thank you for choosing Doctor Finder..!!!");
+                context.Done<object>(null);
             }
         }
     }
