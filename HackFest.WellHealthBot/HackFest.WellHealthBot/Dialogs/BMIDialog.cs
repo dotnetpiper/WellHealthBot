@@ -51,7 +51,7 @@ namespace HackFest.WellHealthBot.Dialogs
         private void CallChoices(IDialogContext context)
         {
             PromptDialog.Choice(context, OnOptionSelected,
-                new List<string> {"Health Chart", "Suggest Doctor", "Physical Activity"},
+                new List<string> {"Health Chart", "Suggest Doctor", "Physical Activity","Back"},
                 "To maintain your weight, make sure your eat a healthy,balanced diet, and that you exercise regualarly.");
         }
 
@@ -80,6 +80,10 @@ namespace HackFest.WellHealthBot.Dialogs
                         message.Attachments.Add(attachment);
                         await context.PostAsync(message);
                         CallChoices(context);
+                        break;
+                    case "Back":
+                        await context.PostAsync("Thank you for using BMI calculator...!!! Or, say <i>Hi</i> again to return to the main menu.");
+                       context.Done<object>(null);
                         break;
                 }
             }
