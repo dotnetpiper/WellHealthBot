@@ -32,7 +32,7 @@ namespace HackFest.WellHealthBot.Dialogs
                     case "No":
                         await context.PostAsync(
                             "Tell me how you’re feeling or your symptoms, and I will try to find relevant medical information to help you understand why you’re feeling this way.");
-                        await context.PostAsync("I can also instantly search for a doctor to you.");
+                        await context.PostAsync("I can also instantly search for a doctor to you,Kindly type<b>doctor</b>");
                         context.Done<object>(null);
                         break;
                 }
