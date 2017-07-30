@@ -5,6 +5,7 @@
         Physician,
         CardioLogist,
         Dentist,
-        Dermatologist
+        Dermatologist,
+        Dietian
     }
 }

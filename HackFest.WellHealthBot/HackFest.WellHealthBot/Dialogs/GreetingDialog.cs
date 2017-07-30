@@ -26,8 +26,16 @@ namespace HackFest.WellHealthBot.Dialogs
 
                 switch (optionSelected)
                 {
-                    case "Yes":                    
+                    case "BMI Calculator":                    
                         context.Call(new Dialogs.BMIDialog(), ResumeAfterOptionDialog1Async);
+                        break;
+                    case "Suggest Doctor":
+                        context.Call(new Dialogs.DoctorDialog(), ResumeAfterOptionDialog1Async);
+                        break;
+                    case "Help":
+                        await context.PostAsync(
+                            "Please leave a message and we will respond as soon as possible. Or, say <i>Hi</i> again to return to the main menu.");
+                            context.Done<object>(null);
                         break;
                     case "No":
                         await context.PostAsync(
@@ -62,8 +70,8 @@ namespace HackFest.WellHealthBot.Dialogs
             }
             else
             {
-                await context.PostAsync($" Welcome {userName}.  Would you like to check your BMI?");
-                PromptDialog.Choice(context, OnOptionSelected, new List<string> { "Yes", "No" }, "Body mass index (BMI) is a measure of body fat based on height and weight that applies to adult men and women.");
+                await context.PostAsync($" Welcome {userName}.  Would you like to choose any of the below services?");
+                PromptDialog.Choice(context, OnOptionSelected, new List<string> { "BMI Calculator", "Suggest Doctor","Help" }, "I can help you understand the symptoms you're experiencing. I'm quite chatty, but keep in mind that I am not a certified medical doctor");
             }
         }
 

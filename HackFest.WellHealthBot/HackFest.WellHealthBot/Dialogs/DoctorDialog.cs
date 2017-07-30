@@ -115,7 +115,7 @@ namespace HackFest.WellHealthBot.Dialogs
             }
             finally
             {
-                await context.PostAsync("Thank you for choosing Doctor Finder..!!!");
+                await context.PostAsync("Thank you for choosing Doctor Finder..!!! Or, say <i>Hi</i> again to return to the main menu.");
                 context.Done<object>(null);
             }
         }
