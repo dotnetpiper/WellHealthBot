@@ -14,7 +14,7 @@ namespace HackFest.WellHealthBot.Dialogs
     {
         public async Task StartAsync(IDialogContext context)
         {
-            await context.PostAsync("");
+            //await context.PostAsync("");
 
             var bmiFormDialog = FormDialog.FromForm(BuildBmiForm, FormOptions.PromptInStart);
 
