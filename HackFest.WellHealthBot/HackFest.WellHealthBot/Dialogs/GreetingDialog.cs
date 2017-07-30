@@ -32,6 +32,10 @@ namespace HackFest.WellHealthBot.Dialogs
                     case "Suggest Doctor":
                         context.Call(new Dialogs.DoctorDialog(), ResumeAfterOptionDialog1Async);
                         break;
+                    case "Symptoms":
+                        await context.PostAsync("First, let me know your symptoms or the condition you want to learn more about. Shorter descriptions are usually a good start. For example: <i>I have a sore throat.</i>");
+                        context.Done<object>(null);
+                        break;
                     case "Help":
                         await context.PostAsync(
                             "Please leave a message and we will respond as soon as possible. Or, say <i>Hi</i> again to return to the main menu.");
@@ -71,7 +75,7 @@ namespace HackFest.WellHealthBot.Dialogs
             else
             {
                 await context.PostAsync($" Welcome {userName}.  Would you like to choose any of the below services?");
-                PromptDialog.Choice(context, OnOptionSelected, new List<string> { "BMI Calculator", "Suggest Doctor","Help" }, "I can help you understand the symptoms you're experiencing. I'm quite chatty, but keep in mind that I am not a certified medical doctor");
+                PromptDialog.Choice(context, OnOptionSelected, new List<string> { "BMI Calculator", "Suggest Doctor", "Symptoms", "Help" }, "I can help you understand the symptoms you're experiencing. I'm quite chatty, but keep in mind that I am not a certified medical doctor");
             }
         }
 
