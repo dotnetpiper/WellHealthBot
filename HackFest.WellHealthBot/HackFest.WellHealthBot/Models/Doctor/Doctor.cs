@@ -16,5 +16,7 @@ namespace HackFest.WellHealthBot.Models.Doctor
         public string Image { get; set; }
 
         public string Location { get; set; }
+
+        public string Page { get; set; }
     }
 }

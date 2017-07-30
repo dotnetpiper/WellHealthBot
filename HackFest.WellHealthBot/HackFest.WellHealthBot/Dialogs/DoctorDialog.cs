@@ -66,10 +66,10 @@ namespace HackFest.WellHealthBot.Dialogs
                             {
                                 Title = "More details",
                                 Type = ActionTypes.OpenUrl,
-                                Value =
-                                    $"https://www.google.com/search?q=doctors+in+" + HttpUtility.UrlEncode(doc.Location)
+                                Value = doc.Page
+                                    //$"https://www.google.com/search?q=doctors+in+" + HttpUtility.UrlEncode(doc.Location)
                             },
-                            new CardAction(ActionTypes.ImBack, "Book", value: doc.Name)
+                            new CardAction(ActionTypes.ImBack, "Book an appointment", value: doc.Name)
                         }
 
                     };

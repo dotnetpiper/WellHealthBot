@@ -20,6 +20,7 @@ namespace HackFest.WellHealthBot.Services
                 var doc = new Doctor
                 {
                     Key= docEntity.Key,
+                    Page = docEntity.Page,
                     Name = docEntity.Name,
                     Location = searchQuery.Location,
                     Rating = docEntity.Rating,
@@ -45,29 +46,33 @@ namespace HackFest.WellHealthBot.Services
                     Name = "Dr. Nitin Jha",
                     Image = "https://images1-fabric.practo.com/dr-nitin-jha-1452774116-569792e44aa8b.jpg/thumbnail",
                     Rating = 5,
-                    Key = "1"
+                    Key = "1",
+                    Page = "https://www.practo.com/noida/doctor/dr-nitin-jha-bariatric-surgeon?results_type=doctor"
                 },
                 new Doctor
                 {
                     Name = "Dr. Gaurav Rathore",
                     Image = "https://images1-fabric.practo.com/dr-gaurav-rathore-1469084246-57907257001a9.jpg/thumbnail",
                     Rating = 4,
-                    Key = "2"
+                    Key = "2",
+                    Page = "https://www.practo.com/noida/doctor/dr-gaurav-rathore-orthopedist?results_type=doctor"
                 },
                 new Doctor
                 {
-                    Name = "Dr. Manu Tiwari ",
+                    Name = "Dr. Manu Tiwari",
                     Image =
                         "https://images1-fabric.practo.com/554a117e9403d8277e0910d750195b448797616e091ad.jpg/thumbnail",
                     Rating = 1,
-                    Key = "3"
+                    Key = "3",
+                    Page = "https://www.practo.com/noida/doctor/manu-tiwari-psychiatrist?results_type=doctor"
                 },
                 new Doctor
                 {
                     Name = "Dr. Ali Nawaz",
                     Image = "https://images1-fabric.practo.com/dr-ali-nawaz-1469440404-5795e1940b74e.jpg/thumbnail",
                     Rating = 3,
-                    Key = "4"
+                    Key = "4",
+                    Page = "https://www.practo.com/noida/doctor/dr-ali-nawaz-general-physician-1?results_type=doctor"
                 },
                 new Doctor
                 {
@@ -75,7 +80,8 @@ namespace HackFest.WellHealthBot.Services
                     Image =
                         "https://images1-fabric.practo.com/doctor/449066/dr-aradhana-singh-58e381e4d3abf.jpg/thumbnail",
                     Rating = 2,
-                    Key = "5"
+                    Key = "5",
+                    Page = "https://www.practo.com/noida/doctor/dr-aradhana-singh-gynecologist-obstetrician?results_type=doctor"
                 }
             };
             return lstDoctors;
